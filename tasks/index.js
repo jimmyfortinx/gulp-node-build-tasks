@@ -1,16 +1,29 @@
 var path = require('path');
 var $ = require('./utils/plugins-loader');
 
-function gulpAppBuildTasks (userConfig, gulp) {
-    var config = require('./config')(userConfig);
+var server = require('./server');
 
+var gulp;
+var config;
+
+exports.use = function (userGulp) {
+    gulp = userGulp;
+}
+
+exports.configure = function (userConfig) {
+    config = require('./config')(userConfig);
+}
+
+exports.registerTasks = function () {
     if(!gulp) {
         gulp = require('gulp');
     }
 
-    gulp.task('test', function () {
-        console.log('Show a test message');
-    });
+    if(!config) {
+        config = require('./config')();
+    }
+
+    server.registerTasks(config, gulp);
 }
 
-module.exports = gulpAppBuildTasks;
+exports.serve = server.serve;
