@@ -1,3 +1,3 @@
 module.exports = require('gulp-load-plugins')({
-  pattern: ['gulp-*']
+  pattern: ['gulp-*', 'del']
 });

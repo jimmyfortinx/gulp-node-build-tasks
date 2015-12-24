@@ -1,7 +1,9 @@
 var path = require('path');
 var $ = require('./utils/plugins-loader');
 
-var server = require('./server');
+var buildModule = require('./build');
+var watchModule = require('./watch');
+var serverModule = require('./server');
 
 var gulp;
 var config;
@@ -14,7 +16,26 @@ exports.configure = function (userConfig) {
     config = require('./config')(userConfig);
 }
 
+exports.registerSubTasks = function () {
+    defineGulpAndConfigIfMissing();
+
+    buildModule.registerSubTasks(config, gulp);
+    watchModule.registerSubTasks(config, gulp);
+    serverModule.registerSubTasks(config, gulp);
+}
+
 exports.registerTasks = function () {
+    defineGulpAndConfigIfMissing();
+
+    buildModule.registerTasks(config, gulp);
+    watchModule.registerTasks(config, gulp);
+    serverModule.registerTasks(config, gulp);
+}
+
+exports.build = buildModule.build;
+exports.serve = serverModule.serve;
+
+function defineGulpAndConfigIfMissing () {
     if(!gulp) {
         gulp = require('gulp');
     }
@@ -22,8 +43,4 @@ exports.registerTasks = function () {
     if(!config) {
         config = require('./config')();
     }
-
-    server.registerTasks(config, gulp);
 }
-
-exports.serve = server.serve;
