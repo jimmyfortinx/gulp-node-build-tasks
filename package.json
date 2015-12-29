@@ -25,6 +25,7 @@
   "dependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.0",
+    "gulp-common-build-tasks": "git+https://github.com/jimmyfortinx/gulp-common-build-tasks.git",
     "gulp-jasmine": "^2.2.1",
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.0",
