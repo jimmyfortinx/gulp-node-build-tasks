@@ -12,12 +12,6 @@ exports.clean = function (config) {
     ]);
 }
 
-exports.copyScripts = function (config, gulp) {
-    return gulp.src(path.join(config.paths.src, '/**/*.js'))
-        .pipe(gulp.dest(path.join(config.paths.dist, '/')))
-        .pipe($.size({ title: path.join(config.paths.dist, '/'), showFiles: true }));
-}
-
 exports.copyNpmDependencies = function (config, gulp) {
     return gulp.src($.npmFiles(), {base:'./'})
         .pipe(gulp.dest(path.join(config.paths.dist, '/')));
@@ -29,7 +23,7 @@ exports.build = function (config, gulp, callback) {
     runSequence(
         [
             tasksRegister.getSubTask('copy:npmDependencies'),
-            tasksRegister.getSubTask('copy:scripts')
+            tasksRegister.getSubTask('scripts:dist')
         ],
         callback);
 }
@@ -38,7 +32,6 @@ exports.registerSubTasks = function (config, gulp) {
     var tasks = {
         'build': true,
         'clean': true,
-        'copy:scripts': 'copyScripts',
         'copy:npmDependencies': 'copyNpmDependencies'
     };
 

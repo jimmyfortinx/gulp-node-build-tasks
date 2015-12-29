@@ -10,6 +10,7 @@ exports.watch = function (config, gulp, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
     var tasks = [
+        tasksRegister.getSubTask('scripts'),
         tasksRegister.getSubTask('test')
     ];
 
