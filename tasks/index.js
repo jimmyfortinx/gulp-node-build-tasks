@@ -2,6 +2,7 @@ var path = require('path');
 var $ = require('./utils/plugins-loader');
 
 var buildModule = require('./build');
+var unitTestsModule = require('./unit-tests');
 var watchModule = require('./watch');
 var serverModule = require('./server');
 
@@ -20,6 +21,7 @@ exports.registerSubTasks = function () {
     defineGulpAndConfigIfMissing();
 
     buildModule.registerSubTasks(config, gulp);
+    unitTestsModule.registerSubTasks(config, gulp);
     watchModule.registerSubTasks(config, gulp);
     serverModule.registerSubTasks(config, gulp);
 }
@@ -28,6 +30,7 @@ exports.registerTasks = function () {
     defineGulpAndConfigIfMissing();
 
     buildModule.registerTasks(config, gulp);
+    unitTestsModule.registerTasks(config, gulp);
     watchModule.registerTasks(config, gulp);
     serverModule.registerTasks(config, gulp);
 }
