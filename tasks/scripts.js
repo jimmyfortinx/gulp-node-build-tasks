@@ -1,21 +1,10 @@
 'use strict';
 
 var path = require('path');
+var common = require('gulp-common-build-tasks');
 
 var $ = require('./utils/plugins-loader');
 var tasksRegister = require('./utils/tasks-register');
-
-exports.jshint = function (config, gulp) {
-    return gulp.src(path.join(config.paths.src, '/**/*.js'))
-        .pipe($.jshint(config.jshint))
-        .pipe($.jshint.reporter('default'));
-}
-
-exports.jscs = function (config, gulp) {
-    return gulp.src(path.join(config.paths.src, '/**/*.js'))
-        .pipe($.jscs())
-        .pipe($.jscs.reporter());
-}
 
 exports.copy = function (config, gulp) {
     return gulp.src(path.join(config.paths.src, '/**/*.js'))
@@ -49,14 +38,18 @@ exports.scriptsDist = function (config, gulp, callback) {
 }
 
 exports.registerSubTasks = function (config, gulp) {
-    var tasks = {
+    var commonTasks = {
         'scripts:jshint': 'jshint',
         'scripts:jscs': 'jscs',
+    }
+
+    var tasks = {
         'scripts:copy': 'copy',
         'scripts': true,
         'scripts:dist': 'scriptsDist'
     };
 
+    tasksRegister.registerSubTasks(common.scripts, config, gulp, commonTasks);
     tasksRegister.registerSubTasks(exports, config, gulp, tasks);
 }
 
