@@ -15,26 +15,35 @@ exports.copy = function (config, gulp) {
 exports.scripts = function (config, gulp, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
-    runSequence(
-        [
-            tasksRegister.getSubTask('scripts:jshint'),
-            tasksRegister.getSubTask('scripts:jscs')
-        ],
-        callback
-    );
+    var tasks = [];
+
+    if (config.jshintEnabled) {
+        tasks.push(tasksRegister.getSubTask('scripts:jshint'));
+    }
+
+    if (config.jscsEnabled) {
+        tasks.push(tasksRegister.getSubTask('scripts:jscs'));
+    }
+
+    runSequence(tasks, callback);
 }
 
 exports.scriptsDist = function (config, gulp, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
-    runSequence(
-        [
-            tasksRegister.getSubTask('scripts:jshint'),
-            tasksRegister.getSubTask('scripts:jscs'),
-            tasksRegister.getSubTask('scripts:copy')
-        ],
-        callback
-    );
+    var tasks = [];
+
+    if (config.jshintEnabled) {
+        tasks.push(tasksRegister.getSubTask('scripts:jshint'));
+    }
+
+    if (config.jscsEnabled) {
+        tasks.push(tasksRegister.getSubTask('scripts:jscs'));
+    }
+
+    tasks.push(tasksRegister.getSubTask('scripts:copy'));
+
+    runSequence(tasks, callback);
 }
 
 exports.registerSubTasks = function (config, gulp) {

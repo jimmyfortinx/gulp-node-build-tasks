@@ -12,7 +12,7 @@ module.exports = function (userConfig) {
         }
     };
 
-    common.scripts.addDefaultJsHintConfig(newConfig);
+    common.config.apply(newConfig, userConfig);
 
     return newConfig;
 }
