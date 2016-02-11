@@ -10,15 +10,15 @@ var serverModule = require('./server');
 var gulp;
 var config;
 
-exports.use = function (userGulp) {
+exports.use = function(userGulp) {
     gulp = userGulp;
-}
+};
 
-exports.configure = function (userConfig) {
+exports.configure = function(userConfig) {
     config = require('./config')(userConfig);
-}
+};
 
-exports.registerSubTasks = function () {
+exports.registerSubTasks = function() {
     defineGulpAndConfigIfMissing();
 
     scriptsModule.registerSubTasks(config, gulp);
@@ -26,9 +26,9 @@ exports.registerSubTasks = function () {
     unitTestsModule.registerSubTasks(config, gulp);
     watchModule.registerSubTasks(config, gulp);
     serverModule.registerSubTasks(config, gulp);
-}
+};
 
-exports.registerTasks = function () {
+exports.registerTasks = function() {
     defineGulpAndConfigIfMissing();
 
     scriptsModule.registerTasks(config, gulp);
@@ -36,17 +36,17 @@ exports.registerTasks = function () {
     unitTestsModule.registerTasks(config, gulp);
     watchModule.registerTasks(config, gulp);
     serverModule.registerTasks(config, gulp);
-}
+};
 
 exports.build = buildModule.build;
 exports.serve = serverModule.serve;
 
-function defineGulpAndConfigIfMissing () {
-    if(!gulp) {
+function defineGulpAndConfigIfMissing() {
+    if (!gulp) {
         gulp = require('gulp');
     }
 
-    if(!config) {
+    if (!config) {
         config = require('./config')();
     }
 }

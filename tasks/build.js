@@ -5,19 +5,19 @@ var path = require('path');
 var $ = require('./utils/plugins-loader');
 var tasksRegister = require('./utils/tasks-register');
 
-exports.clean = function (config) {
+exports.clean = function(config) {
     return $.del([
         path.join(config.paths.dist, '/'),
         path.join(config.paths.tmp, '/')
     ]);
-}
+};
 
-exports.copyNpmDependencies = function (config, gulp) {
-    return gulp.src($.npmFiles(), {base:'./'})
+exports.copyNpmDependencies = function(config, gulp) {
+    return gulp.src($.npmFiles(), { base: './' })
         .pipe(gulp.dest(path.join(config.paths.dist, '/')));
-}
+};
 
-exports.build = function (config, gulp, callback) {
+exports.build = function(config, gulp, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
     runSequence(
@@ -26,9 +26,9 @@ exports.build = function (config, gulp, callback) {
             tasksRegister.getSubTask('scripts:dist')
         ],
         callback);
-}
+};
 
-exports.registerSubTasks = function (config, gulp) {
+exports.registerSubTasks = function(config, gulp) {
     var tasks = {
         'build': true,
         'clean': true,
@@ -36,9 +36,9 @@ exports.registerSubTasks = function (config, gulp) {
     };
 
     tasksRegister.registerSubTasks(exports, config, gulp, tasks);
-}
+};
 
-exports.registerTasks = function (config, gulp) {
+exports.registerTasks = function(config, gulp) {
     exports.registerSubTasks(config, gulp);
 
     var tasks = {
@@ -47,4 +47,4 @@ exports.registerTasks = function (config, gulp) {
     };
 
     tasksRegister.registerTasks(gulp, tasks);
-}
+};

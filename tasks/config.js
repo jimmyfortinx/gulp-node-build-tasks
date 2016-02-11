@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var common = require('gulp-common-build-tasks');
 
-module.exports = function (userConfig) {
+module.exports = function(userConfig) {
     var newConfig = {
         paths: {
             src: _.get(userConfig, 'paths.src', 'src'),
@@ -15,4 +15,4 @@ module.exports = function (userConfig) {
     common.config.apply(newConfig, userConfig);
 
     return newConfig;
-}
+};
