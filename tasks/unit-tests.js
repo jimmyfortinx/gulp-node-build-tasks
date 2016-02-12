@@ -1,12 +1,14 @@
 'use strict';
 
 var path = require('path');
+var common = require('gulp-common-build-tasks');
 
 var $ = require('./utils/plugins-loader');
-var tasksRegister = require('./utils/tasks-register');
-var buildModule = require('./build');
+var tasks = common.tasks();
 
-exports.test = function(config, gulp) {
+tasks.import(require('./build'));
+
+tasks.create('.test', function(gulp, config) {
     var plumberOptions = {
         errorHandler: function(error) {
             if (config.jscsEnabled && error.name !== 'SyntaxError') {
@@ -21,22 +23,6 @@ exports.test = function(config, gulp) {
     return gulp.src(path.join(config.paths.src, '/**/*.spec.js'))
         .pipe($.plumber(plumberOptions))
         .pipe($.jasmine());
-};
+});
 
-exports.registerSubTasks = function(config, gulp) {
-    var tasks = {
-        'test': true
-    };
-
-    tasksRegister.registerSubTasks(exports, config, gulp, tasks);
-};
-
-exports.registerTasks = function(config, gulp) {
-    exports.registerSubTasks(config, gulp);
-
-    var tasks = {
-        'test': true
-    };
-
-    tasksRegister.registerTasks(gulp, tasks);
-};
+module.exports = tasks;

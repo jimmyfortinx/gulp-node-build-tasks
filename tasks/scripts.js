@@ -4,25 +4,28 @@ var path = require('path');
 var common = require('gulp-common-build-tasks');
 
 var $ = require('./utils/plugins-loader');
-var tasksRegister = require('./utils/tasks-register');
 
-exports.copy = function(config, gulp) {
+var tasks = common.tasks();
+
+tasks.import(common.scripts);
+
+tasks.create('.scripts:copy', function(gulp, config) {
     return gulp.src(path.join(config.paths.src, '/**/*.js'))
         .pipe(gulp.dest(path.join(config.paths.dist, '/')))
         .pipe($.size({ title: path.join(config.paths.dist, '/'), showFiles: true }));
-};
+});
 
-exports.scripts = function(config, gulp, callback) {
+tasks.create('.scripts', function(gulp, config, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
     var tasks = [];
 
     if (config.jshintEnabled) {
-        tasks.push(tasksRegister.getSubTask('scripts:jshint'));
+        tasks.push('node.jshint');
     }
 
     if (config.jscsEnabled) {
-        tasks.push(tasksRegister.getSubTask('scripts:jscs'));
+        tasks.push('node.jscs');
     }
 
     if (tasks.length === 0) {
@@ -30,42 +33,28 @@ exports.scripts = function(config, gulp, callback) {
     } else {
         runSequence(tasks, callback);
     }
-};
+});
 
-exports.scriptsDist = function(config, gulp, callback) {
+tasks.create('.scripts:dist', function(gulp, config, callback) {
     var runSequence = require('run-sequence').use(gulp);
 
     var tasks = [];
 
     if (config.jshintEnabled) {
-        tasks.push(tasksRegister.getSubTask('scripts:jshint'));
+        tasks.push('node.jshint');
     }
 
     if (config.jscsEnabled) {
-        tasks.push(tasksRegister.getSubTask('scripts:jscs'));
+        tasks.push('node.jscs');
     }
 
-    tasks.push(tasksRegister.getSubTask('scripts:copy'));
+    tasks.push('node.scripts:copy');
 
-    runSequence(tasks, callback);
-};
+    if (tasks.length === 0) {
+        callback();
+    } else {
+        runSequence(tasks, callback);
+    }
+});
 
-exports.registerSubTasks = function(config, gulp) {
-    var commonTasks = {
-        'scripts:jshint': 'jshint',
-        'scripts:jscs': 'jscs'
-    };
-
-    var tasks = {
-        'scripts:copy': 'copy',
-        'scripts': true,
-        'scripts:dist': 'scriptsDist'
-    };
-
-    tasksRegister.registerSubTasks(common.scripts, config, gulp, commonTasks);
-    tasksRegister.registerSubTasks(exports, config, gulp, tasks);
-};
-
-exports.registerTasks = function(config, gulp) {
-    exports.registerSubTasks(config, gulp);
-};
+module.exports = tasks;
