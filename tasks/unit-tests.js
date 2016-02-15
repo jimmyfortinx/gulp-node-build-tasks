@@ -11,7 +11,7 @@ tasks.import(require('./build'));
 tasks.create('.test', function(gulp, config) {
     var plumberOptions = {
         errorHandler: function(error) {
-            if (config.jscsEnabled && error.name !== 'SyntaxError') {
+            if (!config.jscsEnabled || error.name !== 'SyntaxError') {
                 // We don't log syntax error because it is covered with jscs
                 console.log(error.toString());
             }
