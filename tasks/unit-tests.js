@@ -6,6 +6,8 @@ var common = require('gulp-common-build-tasks');
 var $ = require('./utils/plugins-loader');
 var tasks = common.tasks();
 
+var JasmineTerminalReporter = require('jasmine-terminal-reporter');
+
 tasks.import(require('./build'));
 
 tasks.create('.test', function(gulp, config) {
@@ -20,9 +22,13 @@ tasks.create('.test', function(gulp, config) {
         }
     };
 
+    var jasmineTerminalReporter = new JasmineTerminalReporter(config.jasmineTerminalReporter);
+
     return gulp.src(path.join(config.paths.src, '/**/*.spec.js'))
         .pipe($.plumber(plumberOptions))
-        .pipe($.jasmine());
+        .pipe($.jasmine({
+            reporter: jasmineTerminalReporter
+        }));
 });
 
 module.exports = tasks;

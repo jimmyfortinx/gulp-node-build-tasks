@@ -9,6 +9,10 @@ module.exports = function(userConfig) {
             dist: _.get(userConfig, 'paths.dist', 'dist'),
             tmp: _.get(userConfig, 'paths.tmp', '.tmp'),
             e2e: _.get(userConfig, 'paths.e2e', 'e2e')
+        },
+
+        jasmineTerminalReporter: {
+            includeStackTrace: _.get(userConfig, 'unitTest.showTrace', false)
         }
     };
 
