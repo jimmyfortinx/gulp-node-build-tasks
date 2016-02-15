@@ -1,10 +1,12 @@
 'use strict';
 
 var path = require('path');
+var common = require('gulp-common-build-tasks');
 
 var $ = require('./utils/plugins-loader');
-var tasksRegister = require('./utils/tasks-register');
-var buildModule = require('./build');
+var tasks = common.tasks();
+
+tasks.import(require('./watch'));
 
 function serve(directory) {
     $.nodemon({
@@ -13,41 +15,12 @@ function serve(directory) {
     });
 }
 
-exports.serve = function(config) {
+tasks.create('.serve', function(gulp, config) {
     serve(config.paths.src);
-};
+});
 
-exports.serveDist = function(config, gulp, callback) {
-    var runSequence = require('run-sequence').use(gulp);
+tasks.create('.serve:dist', ['.build', '.watch:dist'], function(gulp, config) {
+    serve(config.paths.dist);
+});
 
-    return runSequence(
-        tasksRegister.getSubTask('build'),
-        tasksRegister.getSubTask('watch:dist'),
-        function() {
-            serve(config.paths.dist);
-            callback();
-        }
-    );
-};
-
-exports.registerSubTasks = function(config, gulp) {
-    var tasks = {
-        'serve': true,
-        'serve:dist': 'serveDist'
-    };
-
-    tasksRegister.registerSubTasks(exports, config, gulp, tasks);
-};
-
-exports.registerTasks = function(config, gulp) {
-    exports.registerSubTasks(config, gulp);
-
-    var tasks = {
-        'serve': true,
-        // Used by Visual Studio Code to run debugger
-        'start': 'serve',
-        'serve:dist': true
-    };
-
-    tasksRegister.registerTasks(gulp, tasks);
-};
+module.exports = tasks;

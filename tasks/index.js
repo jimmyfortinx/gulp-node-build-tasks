@@ -1,52 +1,18 @@
-var path = require('path');
-var $ = require('./utils/plugins-loader');
+var common = require('gulp-common-build-tasks');
 
-var scriptsModule = require('./scripts');
-var buildModule = require('./build');
-var unitTestsModule = require('./unit-tests');
-var watchModule = require('./watch');
-var serverModule = require('./server');
+var tasks = common.tasks('node');
 
-var gulp;
-var config;
+tasks.addTransformConfigurationFunction(require('./config'));
+tasks.import(require('./server'));
 
-exports.use = function(userGulp) {
-    gulp = userGulp;
-};
+tasks.create('build', ['.build']);
+tasks.create('clean', ['.clean']);
+tasks.create('serve', ['.serve']);
+// Used by Visual Studio Code to run debugger
+tasks.create('start', ['.serve']);
+tasks.create('serve:dist', ['.serve:dist']);
+tasks.create('test', ['.test']);
+tasks.create('test:auto', ['.watch']);
+tasks.create('test:auto:dist', ['.watch:dist']);
 
-exports.configure = function(userConfig) {
-    config = require('./config')(userConfig);
-};
-
-exports.registerSubTasks = function() {
-    defineGulpAndConfigIfMissing();
-
-    scriptsModule.registerSubTasks(config, gulp);
-    buildModule.registerSubTasks(config, gulp);
-    unitTestsModule.registerSubTasks(config, gulp);
-    watchModule.registerSubTasks(config, gulp);
-    serverModule.registerSubTasks(config, gulp);
-};
-
-exports.registerTasks = function() {
-    defineGulpAndConfigIfMissing();
-
-    scriptsModule.registerTasks(config, gulp);
-    buildModule.registerTasks(config, gulp);
-    unitTestsModule.registerTasks(config, gulp);
-    watchModule.registerTasks(config, gulp);
-    serverModule.registerTasks(config, gulp);
-};
-
-exports.build = buildModule.build;
-exports.serve = serverModule.serve;
-
-function defineGulpAndConfigIfMissing() {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-
-    if (!config) {
-        config = require('./config')();
-    }
-}
+module.exports = tasks;
