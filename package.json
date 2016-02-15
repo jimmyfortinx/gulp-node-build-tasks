@@ -34,6 +34,7 @@
     "gulp-npm-files": "^0.1.3",
     "gulp-plumber": "^1.1.0",
     "gulp-size": "^2.0.0",
+    "jasmine-blink1-reporter": "git+https://github.com/siclo/jasmine-blink1-reporter.git#barebones-reporter",
     "jshint": "^2.8.0",
     "lodash": "^3.10.1",
     "run-sequence": "^1.1.5"
