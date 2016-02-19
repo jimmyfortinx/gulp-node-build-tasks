@@ -22,8 +22,8 @@ The minimum npm version required is 3 because they started supporting the flat d
 
 ## File structure
 
-* **/src/\*\*/*.{supported file formats}**: Application related code
-* **/src/\*\*/*.spec.js**: [Optional] Application related unit tests
+* **/src/\*\*/\*.{supported file formats}**: Application related code
+* **/src/\*\*/\*.spec.js**: [Optional] Application related unit tests
 * **/.jscsrc**: [Optional] This is the only place where .jscsrc is supported for now
 * **/.jshintrc**: [Optional] This is the only place where .jshintrc is supported for now
 
