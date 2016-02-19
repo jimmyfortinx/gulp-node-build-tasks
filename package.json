@@ -25,7 +25,11 @@
   "dependencies": {
     "del": "^2.2.0",
     "gulp": "^3.9.0",
+<<<<<<< Updated upstream
     "gulp-common-build-tasks": "git+https://github.com/jimmyfortinx/gulp-common-build-tasks.git",
+=======
+    "gulp-common-build-tasks": "0.0.2",
+>>>>>>> Stashed changes
     "gulp-jasmine": "^2.2.1",
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.0",
