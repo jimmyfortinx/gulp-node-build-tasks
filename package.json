@@ -1,6 +1,6 @@
 {
   "name": "gulp-node-build-tasks",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "This module will add standard gulp tasks to start building a node server.",
   "main": "tasks/index.js",
   "scripts": {
