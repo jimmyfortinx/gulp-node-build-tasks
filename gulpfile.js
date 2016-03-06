@@ -5,7 +5,8 @@ var config = {
     projectDirectory: __dirname,
     paths: {
         src: 'tasks'
-    }
+    },
+    lint: ['jshint', 'jscs']
 };
 
 gulpNodeBuildTasks.apply(config, gulp);
