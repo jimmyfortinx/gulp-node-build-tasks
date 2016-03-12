@@ -4,7 +4,7 @@
   "description": "This module will add standard gulp tasks to start building a node server.",
   "main": "tasks/index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test-e2e"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,12 @@
     "jshint": "^2.8.0",
     "lodash": "^3.10.1",
     "run-sequence": "^1.1.5"
+  },
+  "devDependencies": {
+    "child-process-promise": "^1.1.0",
+    "dir-compare": "^1.0.1",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "should": "^8.2.2"
   }
 }

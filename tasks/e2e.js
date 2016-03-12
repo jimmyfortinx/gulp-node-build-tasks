@@ -10,9 +10,9 @@ tasks.import(require('./build'));
 var jasmineHelpers = require('./helpers/jasmine');
 
 var getFiles = function(config) {
-    return path.join(config.paths.src, '**/*.spec.js');
+    return path.join(config.paths.e2e, '**/*.spec.js');
 };
 
-tasks.create('.test', jasmineHelpers.task(getFiles));
+tasks.create('.e2e', jasmineHelpers.task(getFiles));
 
 module.exports = tasks;
