@@ -16,7 +16,7 @@ module.exports = function(userConfig) {
         }
     };
 
-    common.config.apply(newConfig, userConfig);
+    common.commonConfig.apply(newConfig, userConfig);
 
     return newConfig;
 };

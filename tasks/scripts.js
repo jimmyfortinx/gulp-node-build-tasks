@@ -15,46 +15,8 @@ tasks.create('.scripts:copy', function(gulp, config) {
         .pipe($.size({ title: path.join(config.paths.dist, '/'), showFiles: true }));
 });
 
-tasks.create('.scripts', function(gulp, config, callback) {
-    var runSequence = require('run-sequence').use(gulp);
+tasks.create('.scripts', ['.lint']);
 
-    var tasks = [];
-
-    if (config.jshintEnabled) {
-        tasks.push('node.jshint');
-    }
-
-    if (config.jscsEnabled) {
-        tasks.push('node.jscs');
-    }
-
-    if (tasks.length === 0) {
-        callback();
-    } else {
-        runSequence(tasks, callback);
-    }
-});
-
-tasks.create('.scripts:dist', function(gulp, config, callback) {
-    var runSequence = require('run-sequence').use(gulp);
-
-    var tasks = [];
-
-    if (config.jshintEnabled) {
-        tasks.push('node.jshint');
-    }
-
-    if (config.jscsEnabled) {
-        tasks.push('node.jscs');
-    }
-
-    tasks.push('node.scripts:copy');
-
-    if (tasks.length === 0) {
-        callback();
-    } else {
-        runSequence(tasks, callback);
-    }
-});
+tasks.create('.scripts:dist', ['.lint', '.scripts:copy']);
 
 module.exports = tasks;
